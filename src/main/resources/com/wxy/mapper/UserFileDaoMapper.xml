@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wxy.dao.UserFileDao">
+
+<!--    ユーザーIDを基づいて該当ファイル情報を獲得する-->
+    <select id="findByUserId" parameterType="Integer" resultType="UserFile">
+        select id, old_file_name, new_file_name, ext, path, size,
+        type, is_img, down_count, update_time, user_id
+        from t_files
+        where user_id=#{id}
+    </select>
+
+    <insert id="save" parameterType="UserFile" useGeneratedKeys="true" keyProperty="id">
+        insert into t_files values (#{id},#{oldFileName},#{newFileName},#{ext},
+        #{path},#{size},#{type},#{isImg},#{downCount},#{updateTime},#{userId})
+    </insert>
+
+    <select id="findById" parameterType="Integer" resultType="UserFile">
+        select id, old_file_name, new_file_name, ext, path, size,
+        type, is_img, down_count, update_time, user_id
+        from t_files
+        where id=#{id}
+    </select>
+
+    <update id="updateDownloadCount" parameterType="UserFile">
+        update t_files set down_count=#{downCount} where id=#{id}
+    </update>
+
+    <delete id="deleteById" parameterType="UserFile">
+        delete from t_files where id=#{id}
+    </delete>
+</mapper>
